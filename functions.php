@@ -85,6 +85,15 @@ add_action(
 	}
 );
 
+add_action( 'enqueue_block_editor_assets', function() {
+	wp_enqueue_script(
+		'jetpack-ai-demo',
+		get_template_directory_uri() .'/assets/jetpack-ai-demo.js',
+		false,
+		time(),
+	);
+}, 1000 );
+
 add_action(
 	'init',
 	function () {
@@ -103,6 +112,8 @@ add_action(
 		show_admin_bar( true );
 	}
 );
+
+
 
 /**
  * Loads the editor.

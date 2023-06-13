@@ -12,6 +12,15 @@ This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
 
-.notice.notice-alt.notice-error.is-dismissible {
+.notice.notice-alt.notice-error.is-dismissible,
+.components-panel__body.edit-post-last-revision__panel,
+.edit-post-fullscreen-mode-close.components-button,
+.edit-post-header-preview__grouping-external
+{
     display: none;
+}
+
+.editor-post-publish-button {
+	color: white !important;
+	cursor: pointer !important;
 }
