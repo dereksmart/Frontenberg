@@ -46,14 +46,24 @@ wp.domReady( () => {
 			} );
 		}
 
-		// Hijack the switch to draft button to open the Jetpack plugin page.
-		const downloadJetpack = jQuery( '.editor-post-switch-to-draft' );
-		if ( downloadJetpack.length ) {
-			downloadJetpack.text('Download Jetpack' );
-			downloadJetpack.on( 'click mousedown', function( event ) {
-				event.preventDefault();
+		// Inject a link to download Jetpack.
+		var downloadDiv = jQuery('<div>', {
+			class: 'components-dropdown components-dropdown-menu block-editor-post-preview__dropdown',
+			tabindex: '-1'
+		});
+		var downloadButton = jQuery( '<button>', {
+			type: 'button',
+			class: 'components-button block-editor-post-preview__button-toggle components-dropdown-menu__toggle is-tertiary',
+			text: 'Download Jetpack',
+			click: function() {
 				window.location.href = 'https://wordpress.org/plugins/jetpack';
-			} );
-		}
+			}
+		});
+		downloadDiv.append( downloadButton );
+
+		// Select the 'Preview' button container and insert the new div after it.
+		var previewContainer = jQuery( '.block-editor-post-preview__dropdown' );
+		previewContainer.after( downloadDiv );
+
 	}, 1000 );
 } );
