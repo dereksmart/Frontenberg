@@ -21,8 +21,18 @@ wp.domReady( () => {
 		if( picture ) {
 			var source = picture.querySelector( 'source' );
 			var img = picture.querySelector( 'img' );
-			source.setAttribute( 'srcset', 'https://jetpackme.files.wordpress.com/2023/06/jetpack-ai-assistant.jpg?w=1680' );
-			img.setAttribute( 'src', 'https://jetpackme.files.wordpress.com/2023/06/jetpack-ai-assistant.jpg?w=1680' );
+			source.setAttribute( 'srcset', 'https://jetpackme.files.wordpress.com/2023/06/jetpack-ai-assistant-1899402515-e1686745515327.jpg' );
+			img.setAttribute( 'src', 'https://jetpackme.files.wordpress.com/2023/06/jetpack-ai-assistant-1899402515-e1686745515327.jpg' );
+		}
+
+		// Hack the welcome modal.
+		jQuery( '.components-guide__page-control' ).hide();
+		var modalNext = document.querySelector( '.components-guide__forward-button' );
+		if ( modalNext ) {
+			modalNext.innerText = 'Get started';
+			modalNext.onclick = function() {
+				wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'welcomeGuide' );
+			}
 		}
 
 		// Change text
