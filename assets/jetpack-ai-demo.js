@@ -1,4 +1,9 @@
 wp.domReady( () => {
+	// Prevents the "changes you made may not be saved" message.
+	window.addEventListener( 'beforeunload', function( event) {
+		event.stopImmediatePropagation();
+	} );
+
 	// wp.data &&
 	// wp.data.select( 'core/edit-post' ).isFeatureActive( 'welcomeGuide' ) &&
 	// wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'welcomeGuide' );
@@ -16,7 +21,7 @@ wp.domReady( () => {
 
 	// Setting this stuff behind a timeout is mega hack.
 	setTimeout(function() {
-		// Hack the welcome modal.
+		/* Hack the welcome modal. */
 		var picture = document.querySelector('.edit-post-welcome-guide__image');
 		if( picture ) {
 			var source = picture.querySelector( 'source' );
@@ -24,9 +29,6 @@ wp.domReady( () => {
 			source.setAttribute( 'srcset', 'https://jetpackme.files.wordpress.com/2023/06/jetpack-ai-assistant-1899402515-e1686745515327.jpg' );
 			img.setAttribute( 'src', 'https://jetpackme.files.wordpress.com/2023/06/jetpack-ai-assistant-1899402515-e1686745515327.jpg' );
 		}
-
-		// Hack the welcome modal.
-		jQuery( '.components-guide__page-control' ).hide();
 		var modalNext = document.querySelector( '.components-guide__forward-button' );
 		if ( modalNext ) {
 			modalNext.innerText = 'Get started';
@@ -34,8 +36,6 @@ wp.domReady( () => {
 				wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'welcomeGuide' );
 			}
 		}
-
-		// Change text
 		var heading = document.querySelector( '.edit-post-welcome-guide__heading' );
 		var text = document.querySelector( '.edit-post-welcome-guide__text' );
 		if ( heading ) {
@@ -45,11 +45,16 @@ wp.domReady( () => {
 			text.innerText = 'Where you can try out the new Jetpack AI Assistant in a sandbox space.\n\n' +
 				'Make this post your own!\n\n';
 		}
+		/* End welcome modal hack */
+
+		// Hide things.
+		jQuery( '.components-guide__page-control' ).hide();
+		jQuery( '.block-editor-post-preview__dropdown' ).hide();
 
 		// Hijack the publish button to open to the Jetpack AI checkout page
 		const buyButton = jQuery( '.editor-post-publish-button' );
 		if ( buyButton.length ) {
-			buyButton.text('Buy for your site' );
+			buyButton.text( 'Buy Jetpack AI' );
 			buyButton.on( 'click', function( event ) {
 				event.preventDefault();
 				window.location.href = 'https://wordpress.com/checkout/jetpack/jetpack_ai_monthly';
@@ -71,9 +76,37 @@ wp.domReady( () => {
 		});
 		downloadDiv.append( downloadButton );
 
-		// Select the 'Preview' button container and insert the new div after it.
-		var previewContainer = jQuery( '.block-editor-post-preview__dropdown' );
-		previewContainer.after( downloadDiv );
+		function copyPostContent() {
+			var text = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'content' );
+			navigator.clipboard.writeText( text ).then( function() {
+				wp.data.dispatch('core/notices').createNotice( 'info', 'Copied!', {
+					isDismissible: true,
+					type: 'snackbar',
+				} );
+			} );
+		}
+
+		var copyDiv = jQuery('<div>', {
+			class: 'components-dropdown components-dropdown-menu block-editor-post-preview__dropdown',
+			tabindex: '-1'
+		});
+		var copyButton = jQuery( '<button>', {
+			type: 'button',
+			class: 'components-button block-editor-post-preview__button-toggle components-dropdown-menu__toggle is-tertiary',
+			text: 'Copy post to clipboard',
+			click: function( event ) {
+				copyPostContent();
+				event.preventDefault();
+				setTimeout(function() {
+					window.location.href = 'https://wordpress.com/checkout/jetpack/jetpack_ai_monthly';
+				}, 2000 );
+			}
+		});
+		copyDiv.append( copyButton );
+
+		// Append the custom links/buttons.
+		buyButton.before( copyDiv );
+		buyButton.before( downloadDiv );
 
 	}, 1000 );
 } );
