@@ -12,6 +12,81 @@ This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
 
-.notice.notice-alt.notice-error.is-dismissible {
+.notice.notice-alt.notice-error.is-dismissible,
+.editor-post-switch-to-draft,
+.components-panel__body.edit-post-last-revision__panel,
+.edit-post-fullscreen-mode-close.components-button,
+.edit-post-header-preview__grouping-external
+{
     display: none;
+}
+
+.editor-post-publish-button {
+	color: white !important;
+	cursor: pointer !important;
+}
+
+.interface-interface-skeleton__header {
+	margin-top: 70px;
+	border-top: 1px solid #e0e0e0;
+}
+
+/**
+Jetpack styles
+ */
+.jetpack-logo .jetpack-emblem {
+	fill: #069e08;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	padding: 16px 0;
+	color: #101517;
+	font-size: 1.125rem;
+	transition: background .1s
+}
+
+@media (max-width: 900px) {
+	.header {
+		position:relative;
+		display: flex;
+		align-items: center;
+		padding: 0;
+		height: 70px;
+		background-color: #fff
+	}
+}
+
+.header.force-opaque,.header.is-opaque {
+	background-color: #fff
+}
+
+.header__content {
+	width: 97%;
+	margin: 0 auto;
+	display: flex;
+	align-items: center
+}
+
+@media (max-width: 1300px) {
+	.header__content {
+		width:90%
+	}
+}
+
+@media (max-width: 1100px) {
+	.header__content {
+		width:95%
+	}
+}
+
+@media (max-width: 782px) {
+	.header__content {
+		padding:0 2rem;
+		width: 100%
+	}
 }

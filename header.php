@@ -6,8 +6,14 @@
 		<link rel="profile" href="http://gmpg.org/xfn/11">
 		<?php wp_head(); ?>
 	</head>
-
 	<body class="wp-admin wp-core-ui js post-php admin-bar post-type-post branch-5-8 version-5-8-3 admin-color-fresh locale-en-us block-editor-page wp-embed-responsive customize-support svg">
+	<header class="header js-header">
+		<nav class="header__content">
+			<a href="https://jetpack.com/" aria-label="Jetpack home" class="home-link header__home-link">
+				<img alt="jetpack-sandbox-logo" src="https://ai.jetpacksandbox.com/wp-content/uploads/2023/06/jetpack-sandbox-logo.jpg" height="38px">
+			</a>
+		</nav>
+	</header>
 		<div id="wpwrap">
 			<div id="adminmenumain" role="navigation" aria-label="Main menu">
 				<a href="#wpbody-content" class="screen-reader-shortcut">Skip to main content</a>
